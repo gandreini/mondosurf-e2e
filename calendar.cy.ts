@@ -1,4 +1,4 @@
-import { downloadFile } from 'cypress-downloadfile/lib/addPlugin';
+// import { downloadFile } from 'cypress-downloadfile/lib/addPlugin';
 require('cypress-downloadfile/lib/downloadFileCommand');
 
 describe('Calendar', () => {
