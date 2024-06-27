@@ -158,7 +158,6 @@ describe('Authentication', () => {
 
         // Clicks button in the email.
         if (Cypress.env('app') === "app") cy.getBySel('email-registration-1-button').invoke('removeAttr', 'target').click();
-        if (Cypress.env('app') === "app") cy.getBySel('account-verify', { timeout: 30000 });
 
         // Final check.
         if (Cypress.env('app') === "app") cy.getBySel('account-verify-verified').should('exist');
