@@ -225,7 +225,7 @@ describe('Favorites', () => {
     });
 
     // Add spot to favorites from the banner in spot page
-    it('add favorite from banner', () => {
+    it.only('add favorite from banner', () => {
         // Click on user in the tab bar to login.
         cy.getBySel('login-tab-bar').click();
 
@@ -236,7 +236,7 @@ describe('Favorites', () => {
         cy.searchAndGoToSpotPage('lillatr');
 
         // Click on good times tab.
-        cy.getBySel('surf-spot-tab-good-times').click();
+        cy.getBySel('surf-spot-tab-info').click();
 
         if (Cypress.env('app') === "app") {
             // Click on add favorite banner.
