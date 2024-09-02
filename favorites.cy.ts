@@ -225,7 +225,7 @@ describe('Favorites', () => {
     });
 
     // Add spot to favorites from the banner in spot page
-    it.only('add favorite from banner', () => {
+    it('add favorite from banner', () => {
         // Click on user in the tab bar to login.
         cy.getBySel('login-tab-bar').click();
 
@@ -238,13 +238,11 @@ describe('Favorites', () => {
         // Click on good times tab.
         cy.getBySel('surf-spot-tab-info').click();
 
-        if (Cypress.env('app') === "app") {
-            // Click on add favorite banner.
-            cy.getBySel('surf-spot-forecast-favorite-banner').click();
+        // Click on add favorite banner.
+        cy.getBySel('surf-spot-forecast-favorite-banner').click();
 
-            // Toast is displayed.
-            cy.checkToast('data-test-toast-favorite-added');
-        }
+        // Toast is displayed.
+        cy.checkToast('data-test-toast-favorite-added');
     });
 
     // New user clicks on icon, registers, and adds favorite in spot page.
