@@ -25,7 +25,7 @@ describe('Favorites', () => {
             'addFavoriteApi'
         );
         cy.getBySel('favorite-add-button')
-            .click()
+            .first().click()
             .wait('@addFavoriteApi')
             .its('response.body.success')
             .should('equal', true);
@@ -50,7 +50,7 @@ describe('Favorites', () => {
             'addFavoriteApi'
         );
         cy.getBySel('favorite-add-button')
-            .click()
+            .first().click()
             .wait('@addFavoriteApi')
             .its('response.body.success')
             .should('equal', true);
@@ -116,13 +116,13 @@ describe('Favorites', () => {
         cy.searchAndGoToSpotPage('lillatr');
 
         // Click on add favorite button.
-        cy.getBySel('favorite-add-button').click();
+        cy.getBySel('favorite-add-button').first().click();
 
         // Toast is displayed.
         cy.checkToast('data-test-toast-favorite-added');
 
         // Click on add favorite button.
-        cy.getBySel('favorite-remove-button').click();
+        cy.getBySel('favorite-remove-button').first().click();
 
         // Toast is displayed.
         cy.checkToast('data-test-toast-favorite-removed');
@@ -201,7 +201,7 @@ describe('Favorites', () => {
         cy.searchAndGoToSpotPage('lillat');
 
         // Click on add favorite button.
-        cy.getBySel('favorite-add-button').click();
+        cy.getBySel('favorite-add-button').first().click();
 
         // Toast is displayed.
         cy.checkToast('data-test-toast-favorite-added');
@@ -251,7 +251,7 @@ describe('Favorites', () => {
         cy.searchAndGoToSpotPage('lillatr');
 
         // Click on favorite button.
-        cy.getBySel('favorite-add-button').click();
+        cy.getBySel('favorite-add-button').first().click();
 
         // Email modal is displayed.
         cy.getBySel('auth-email-form').should('be.visible');
@@ -293,7 +293,7 @@ describe('Favorites', () => {
         cy.searchAndGoToSpotPage('lillatr');
 
         // Click on favorite button.
-        cy.getBySel('favorite-add-button').click();
+        cy.getBySel('favorite-add-button').first().click();
 
         // Email modal is displayed.
         cy.getBySel('auth-email-form').should('be.visible');
@@ -329,7 +329,7 @@ describe('Favorites', () => {
         cy.searchAndGoToSpotPage('lillatr');
 
         // Click on favorite button.
-        cy.getBySel('favorite-add-button').click();
+        cy.getBySel('favorite-add-button').first().click();
 
         // Email modal is displayed.
         cy.getBySel('auth-email-form').should('be.visible');

@@ -106,7 +106,7 @@ describe('Basic Navigation', () => {
         cy.searchAndGoToSpotPage('lillat');
 
         // Click on favorite button.
-        cy.getBySel('favorite-add-button').click();
+        cy.getBySel('favorite-add-button').first().click();
 
         // Click on favorites in the tab bar to login.
         cy.getBySel('favorites-tab-bar').click();
