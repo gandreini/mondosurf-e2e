@@ -20,6 +20,9 @@ describe('Comments', () => {
         // Go to lillatro page
         cy.searchAndGoToSpotPage('lillat');
 
+        // Click on Comments tab
+        cy.getBySel('surf-spot-tab-comments').click();
+
         const randomComment = `Test comment ${Math.random().toString(36).substring(2, 8)}`;
 
         // Inputs the comment
@@ -35,6 +38,9 @@ describe('Comments', () => {
     it('tries to add a comment, login, adds comment', () => {
         // Go to lillatro page
         cy.searchAndGoToSpotPage('lillat');
+
+        // Click on Comments tab
+        cy.getBySel('surf-spot-tab-comments').click();
 
         const randomComment = `Test comment ${Math.random().toString(36).substring(2, 8)}`;
 
@@ -64,6 +70,9 @@ describe('Comments', () => {
 
         // Go to lillatro page
         cy.searchAndGoToSpotPage('lillat');
+
+        // Click on Comments tab
+        cy.getBySel('surf-spot-tab-comments').click();
 
         cy.getBySel('comment-delete').first().click();
         cy.getBySel('modal-button').first().click();
