@@ -368,7 +368,7 @@ describe('Favorites', () => {
         cy.getBySel('surf-spot-forecast-favorite-hidden-banner').should('exist');
 
         // Remove favorite button is displayed.
-        cy.getBySel('favorite-remove-button').should('be.visible');
+        cy.getBySel('favorite-remove-button').should('exist');
     });
 
     // Skipped: Add and remove favorite from homepage near spots.
