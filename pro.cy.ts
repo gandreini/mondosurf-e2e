@@ -161,7 +161,7 @@ describe('Pro', () => {
     });
 
     // Test pro outcome pages
-    it.only('test pro outcome pages', () => {
+    it('test pro outcome pages', () => {
         // Click on user in the tab bar to login.
         cy.getBySel('login-tab-bar').click();
 
