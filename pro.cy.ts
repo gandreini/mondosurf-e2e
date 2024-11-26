@@ -111,6 +111,7 @@ describe('Pro', () => {
         cy.searchAndGoToSpotPage('lillat');
 
         // Click on favorite icon.
+        cy.wait(200);
         cy.getBySel('favorite-add-button').click();
 
         // Check the pro modal.
