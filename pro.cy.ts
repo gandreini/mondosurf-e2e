@@ -112,7 +112,7 @@ describe('Pro', () => {
 
         // Click on favorite icon.
         cy.wait(200);
-        cy.getBySel('favorite-add-button').click();
+        cy.getBySel('favorite-add-button').first().click();
 
         // Check the pro modal.
         cy.getBySel("pro-modal-content").should("exist");
