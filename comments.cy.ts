@@ -80,4 +80,44 @@ describe('Comments', () => {
         // Toast is displayed.
         cy.checkToast('data-test-toast-comment-deleted');
     });
+
+    // Logged user creates a comment, checks it in the home, and then deletes it
+    it('logged creates a comment, checks in in homepage, and deletes id', () => {
+        // Click on user in the tab bar to login.
+        cy.getBySel('login-tab-bar').click();
+
+        // Trial user logins.
+        cy.login(trialEmail, trialName, Cypress.env('demo_users_password'));
+
+        // Go to lillatro page
+        cy.searchAndGoToSpotPage('lillat');
+
+        // Click on Comments tab
+        cy.getBySel('surf-spot-tab-comments').click();
+
+        const randomComment = `Test comment ${Math.random().toString(36).substring(2, 8)}`;
+
+        // Inputs the comment
+        cy.getBySel('comment-field').clear();
+        cy.getBySel('comment-field').type(randomComment);
+        cy.getBySel('comment-submit').click();
+
+        cy.getBySel('comment').first().should('exist');
+        cy.getBySel('comment').first().find('.ms-comment__text').should('have.text', randomComment);
+
+        // Check the comment in homepage
+        cy.getBySel('home-tab-bar').click();
+        cy.getBySel('latest-comments').should('exist');
+        cy.getBySel('comment').first().find(".ms-comment__text").should('have.text', randomComment);
+        cy.getBySel('comment').first().click();
+
+        // Click on Comments tab
+        cy.getBySel('surf-spot-tab-comments').click();
+
+        cy.getBySel('comment-delete').first().click();
+        cy.getBySel('modal-button').first().click();
+
+        // Toast is displayed.
+        cy.checkToast('data-test-toast-comment-deleted');
+    });
 });
