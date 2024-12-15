@@ -232,6 +232,7 @@ describe('Calendar', () => {
         cy.searchAndGoToSpotPage('lillat');
 
         // Add to favorite.
+        cy.wait(Cypress.env('favorite_button_click_wait')); // Added to avoid the Cypress error "Cannot read properties of undefined"
         cy.getBySel('favorite-add-button').click();
 
         // Check if toast appears

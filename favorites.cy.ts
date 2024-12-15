@@ -25,7 +25,7 @@ describe('Favorites', () => {
             'addFavoriteApi'
         );
         cy.getBySel('favorite-add-button')
-            .first().click()
+            .first().wait(Cypress.env('favorite_button_click_wait')).click()
             .wait('@addFavoriteApi')
             .its('response.body.success')
             .should('equal', true);
@@ -50,7 +50,7 @@ describe('Favorites', () => {
             'addFavoriteApi'
         );
         cy.getBySel('favorite-add-button')
-            .first().click()
+            .first().wait(Cypress.env('favorite_button_click_wait')).click()
             .wait('@addFavoriteApi')
             .its('response.body.success')
             .should('equal', true);
@@ -116,6 +116,7 @@ describe('Favorites', () => {
         cy.searchAndGoToSpotPage('lillatr');
 
         // Click on add favorite button.
+        cy.wait(Cypress.env('favorite_button_click_wait')); // Added to avoid the Cypress error "Cannot read properties of undefined"
         cy.getBySel('favorite-add-button').first().click();
 
         // Toast is displayed.
@@ -201,6 +202,7 @@ describe('Favorites', () => {
         cy.searchAndGoToSpotPage('lillat');
 
         // Click on add favorite button.
+        cy.wait(Cypress.env('favorite_button_click_wait')); // Added to avoid the Cypress error "Cannot read properties of undefined"
         cy.getBySel('favorite-add-button').first().click();
 
         // Toast is displayed.
@@ -251,6 +253,7 @@ describe('Favorites', () => {
         cy.searchAndGoToSpotPage('lillatr');
 
         // Click on favorite button.
+        cy.wait(Cypress.env('favorite_button_click_wait')); // Added to avoid the Cypress error "Cannot read properties of undefined"
         cy.getBySel('favorite-add-button').first().click();
 
         // Email modal is displayed.
@@ -293,6 +296,7 @@ describe('Favorites', () => {
         cy.searchAndGoToSpotPage('lillatr');
 
         // Click on favorite button.
+        cy.wait(Cypress.env('favorite_button_click_wait')); // Added to avoid the Cypress error "Cannot read properties of undefined"
         cy.getBySel('favorite-add-button').first().click();
 
         // Email modal is displayed.
@@ -329,6 +333,7 @@ describe('Favorites', () => {
         cy.searchAndGoToSpotPage('lillatr');
 
         // Click on favorite button.
+        cy.wait(Cypress.env('favorite_button_click_wait')); // Added to avoid the Cypress error "Cannot read properties of undefined"
         cy.getBySel('favorite-add-button').first().click();
 
         // Email modal is displayed.

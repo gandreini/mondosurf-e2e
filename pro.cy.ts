@@ -111,7 +111,7 @@ describe('Pro', () => {
         cy.searchAndGoToSpotPage('lillat');
 
         // Click on favorite icon.
-        cy.wait(200);
+        cy.wait(Cypress.env('favorite_button_click_wait')); // Added to avoid the Cypress error "Cannot read properties of undefined"
         cy.getBySel('favorite-add-button').first().click();
 
         // Check the pro modal.

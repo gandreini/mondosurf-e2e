@@ -106,6 +106,8 @@ describe('Basic Navigation', () => {
         cy.searchAndGoToSpotPage('lillat');
 
         // Click on favorite button.
+        cy.getBySel('favorite-add-button').first().should('exist');
+        cy.wait(Cypress.env('favorite_button_click_wait')); // Added to avoid the Cypress error "Cannot read properties of undefined"
         cy.getBySel('favorite-add-button').first().click();
 
         // Click on favorites in the tab bar to login.
