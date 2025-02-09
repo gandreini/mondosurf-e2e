@@ -11,22 +11,26 @@ describe('Basic Navigation', () => {
         cy.getBySel('countries-list').should('exist');
         cy.getBySel('page-title').should('have.text', 'Surf spots')
 
-        // Click on the first country
-        cy.getBySel('country-preview').first().click();
+        // Click on Italy
+        cy.getBySel('country-preview').contains('Italy').click();
 
         // Page checks
         cy.getBySel('regions-list').should('exist');
         cy.getBySel('page-title').should('exist');
 
-        // Click on the first region
-        cy.getBySel('region-preview').first().click();
+        // Click on Tuscany
+        cy.getBySel('region-preview').contains('Tuscany').click();
+
 
         // Page checks
         cy.getBySel('spots-list').should('exist');
         cy.getBySel('page-title').should('exist');
 
-        // Click on the first spot
-        cy.getBySel('surf-spot-preview-link').first().click();
+        // Click on pagination
+        cy.getBySel('list-show-more-button').click();
+
+        // Click on Lillatro
+        cy.getBySel('surf-spot-preview-link').contains('Lillatro').click();
 
         // Page checks
         cy.getBySel('spot-description').should('exist');
