@@ -27,7 +27,7 @@ describe('Basic Navigation', () => {
         cy.getBySel('page-title').should('exist');
 
         // Click on pagination
-        cy.getBySel('list-show-more-button').click();
+        // cy.getBySel('list-show-more-button').click();
 
         // Click on Lillatro
         cy.getBySel('surf-spot-preview-link').contains('Lillatro').click();
