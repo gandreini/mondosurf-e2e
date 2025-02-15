@@ -20,13 +20,19 @@ describe('Favorites', () => {
         // Go to lillatro page
         cy.searchAndGoToSpotPage('lillat');
 
-        // Adds the favorite.
+        // Adds the favorite
         cy.intercept('POST', 'https://rest-api.mondosurf.local.com/wp-json/mondo_surf_api/v1/user-add-favourite').as(
             'addFavoriteApi'
         );
         cy.getBySel('favorite-add-button')
-            .first().wait(Cypress.env('favorite_button_click_wait')).click()
-            .wait('@addFavoriteApi')
+            .first()
+            .as('favButton')  // Store a reference
+            .should('be.visible')
+            // .wait(Cypress.env('favorite_button_click_wait'))
+            .click()
+
+        // Wait for API response before checking UI
+        cy.wait('@addFavoriteApi')
             .its('response.body.success')
             .should('equal', true);
 
@@ -50,8 +56,14 @@ describe('Favorites', () => {
             'addFavoriteApi'
         );
         cy.getBySel('favorite-add-button')
-            .first().wait(Cypress.env('favorite_button_click_wait')).click()
-            .wait('@addFavoriteApi')
+            .first()
+            .as('favButton')  // Store a reference
+            .should('be.visible')
+            // .wait(Cypress.env('favorite_button_click_wait'))
+            .click()
+
+        // Wait for API response before checking UI
+        cy.wait('@addFavoriteApi')
             .its('response.body.success')
             .should('equal', true);
 
