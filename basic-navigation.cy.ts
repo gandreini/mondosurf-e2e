@@ -19,6 +19,7 @@ describe('Basic Navigation', () => {
         cy.getBySel('page-title').should('exist');
 
         // Click on Tuscany
+        cy.getBySel('region-preview').contains('Tuscany').should('exist');
         cy.getBySel('region-preview').contains('Tuscany').click();
 
 
