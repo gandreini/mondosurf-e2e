@@ -157,7 +157,16 @@ describe('Authentication', () => {
         cy.getBySel('email-user-registration-1-name').contains(newName);
 
         // Clicks button in the email.
-        if (Cypress.env('app') === "app") cy.getBySel('email-registration-1-button').invoke('removeAttr', 'target').click();
+        if (Cypress.env('app') === "app") {
+            cy.getBySel('email-registration-1-button').invoke('attr', 'href').then((hrefValue) => {
+                // Replaces the URL for app/web (the email text has 'https://mondosurf.local.com:3000/' hardcoded)
+                const hrefValue2 = hrefValue?.includes(Cypress.env('main_url')) ? hrefValue :
+                    hrefValue?.replace('https://mondosurf.local.com:3000/', Cypress.env('main_url'));
+                if (hrefValue2) {
+                    cy.visit(hrefValue2);
+                }
+            });
+        }
 
         // Final check.
         if (Cypress.env('app') === "app") cy.getBySel('account-verify-verified').should('exist');
