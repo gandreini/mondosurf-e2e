@@ -6,10 +6,6 @@ describe('Calendar', () => {
     const freeName = 'Free user';
     const newEmail = 'new@mailinator.com';
     const newName = 'New user';
-    const proEmail = 'pro@mailinator.com';
-    const proName = 'Pro user';
-    const trialEmail = 'trial@mailinator.com';
-    const trialName = 'Trial user';
 
     // User is not allowed to use calendar
     it("not logged user can't use calendar", () => {
@@ -22,13 +18,13 @@ describe('Calendar', () => {
         // Click on the calendar button
         cy.getBySel('surf-spot-forecast-calendar-banner').click();
 
-        // The login shows up.
+        // The login shows up
         cy.getBySel('auth-email-form').should('be.visible');
     });
 
-    // Free user has no access to calendar
-    it("free user can't use calendar", () => {
-        // Click on user in the tab bar to login.
+    // Free user has access to calendar
+    it.only('free user accesses calendar', () => {
+        // Click on user in the tab bar to login
         cy.getBySel('home-pro-cta-already-member').click();
 
         // Free user login
@@ -37,55 +33,13 @@ describe('Calendar', () => {
         // Go to lillatro page
         cy.searchAndGoToSpotPage('lillat');
 
-        // Click on good times tab.
+        // Click on good times tab
         cy.getBySel('surf-spot-tab-good-times').click();
 
         // Click on the calendar button
         cy.getBySel('surf-spot-forecast-calendar-banner').click();
 
-        // The login shows up.
-        cy.getBySel('trial-modal').should('be.visible');
-    });
-
-    // Pro user has access to calendar
-    it('pro user accesses calendar', () => {
-        // Click on user in the tab bar to login.
-        cy.getBySel('home-pro-cta-already-member').click();
-
-        // Pro user login
-        cy.login(proEmail, proName, Cypress.env('demo_users_password'));
-
-        // Go to lillatro page
-        cy.searchAndGoToSpotPage('lillat');
-
-        // Click on good times tab.
-        cy.getBySel('surf-spot-tab-good-times').click();
-
-        // Click on the calendar button
-        cy.getBySel('surf-spot-forecast-calendar-banner').click();
-
-        // Calendar modal shows up.
-        cy.getBySel('get-calendar-url-ready').should('be.visible');
-    });
-
-    // Trial user has access to calendar
-    it('trial user accesses calendar', () => {
-        // Click on user in the tab bar to login.
-        cy.getBySel('home-pro-cta-already-member').click();
-
-        // Trial user login
-        cy.login(trialEmail, trialName, Cypress.env('demo_users_password'));
-
-        // Go to lillatro page
-        cy.searchAndGoToSpotPage('lillat');
-
-        // Click on good times tab.
-        cy.getBySel('surf-spot-tab-good-times').click();
-
-        // Click on the calendar button
-        cy.getBySel('surf-spot-forecast-calendar-banner').click();
-
-        // Calendar modal shows up.
+        // Calendar modal shows up
         cy.getBySel('get-calendar-url-ready').should('be.visible');
     });
 
@@ -103,9 +57,6 @@ describe('Calendar', () => {
         // New user login
         cy.register(newEmail, newName, Cypress.env('demo_users_password'));
 
-        // Click on trial modal CTA.
-        // cy.getBySel('trial-modal-cta').click();        
-
         // Calendar modal shows up.
         cy.getBySel('get-calendar-url-ready').should('be.visible');
 
@@ -116,7 +67,7 @@ describe('Calendar', () => {
         cy.getBySel("subscription-confirmed").should("exist");
     });
 
-    // Free user starts the Trial to access the calendar
+    // Free user starts access the calendar
     it('free user starts trial to use calendar', () => {
         // Go to lillatro page
         cy.searchAndGoToSpotPage('lillat');
@@ -130,20 +81,17 @@ describe('Calendar', () => {
         // Free user login
         cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
 
-        // Click on trial modal CTA.
-        cy.getBySel('trial-modal-cta').click();
-
         // Calendar modal shows up.
         cy.getBySel('get-calendar-url-ready').should('be.visible');
     });
 
-    // Pro user copies the calendar URL and download file
+    // Free user copies the calendar URL and download file
     it('calendar url copy', () => {
         // Click on user in the tab bar to login.
         cy.getBySel('login-tab-bar').click();
 
-        // Pro user login.
-        cy.login(proEmail, proName, Cypress.env('demo_users_password'));
+        // Free user login.
+        cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
 
         // Go to lillatro page.
         cy.searchAndGoToSpotPage('lillat');
@@ -189,8 +137,8 @@ describe('Calendar', () => {
         // Click on the calendar button
         cy.getBySel('surf-spot-forecast-calendar-banner').click();
 
-        // Pro user login.
-        cy.login(proEmail, proName, Cypress.env('demo_users_password'));
+        // Free user login.
+        cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
 
         // Calendar modal shows up.
         cy.getBySel('get-calendar-url-ready').should('be.visible');
@@ -211,7 +159,7 @@ describe('Calendar', () => {
         cy.loadEmailHtml();
 
         // Check contents of the email.
-        cy.getBySel('email-calendar-url-name').contains(proName);
+        cy.getBySel('email-calendar-url-name').contains(freeName);
         cy.getBySel('email-calendar-url-spot-name').contains('Lillatro');
 
         // Downloads the calendar file.
@@ -225,8 +173,8 @@ describe('Calendar', () => {
         // Click on user in the tab bar to login.
         cy.getBySel('login-tab-bar').click();
 
-        // Pro user login.
-        cy.login(proEmail, proName, Cypress.env('demo_users_password'));
+        // Free user login.
+        cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
 
         // Go to lillatro page.
         cy.searchAndGoToSpotPage('lillat');

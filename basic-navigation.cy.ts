@@ -1,6 +1,6 @@
 describe('Basic Navigation', () => {
-    const proEmail = 'pro@mailinator.com';
-    const proName = 'Pro user';
+    const freeEmail = 'free@mailinator.com';
+    const freeName = 'Free user';
 
     // Navigate to surf spot page
     it('navigate to surf spot page', () => {
@@ -99,7 +99,7 @@ describe('Basic Navigation', () => {
         cy.getBySel('login-tab-bar').click();
 
         // Login the user.
-        cy.login(proEmail, proName, Cypress.env('demo_users_password'));
+        cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
 
         // Click on favorites in the tab bar to login.
         cy.getBySel('favorites-tab-bar').click();
@@ -139,7 +139,7 @@ describe('Basic Navigation', () => {
         cy.getBySel('login-tab-bar').click();
 
         // Login the user.
-        cy.login(proEmail, proName, Cypress.env('demo_users_password'));
+        cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
 
         // Back to profile page
         cy.getBySel('user-tab-bar').click();
@@ -154,9 +154,6 @@ describe('Basic Navigation', () => {
 
         // Back to profile page
         cy.getBySel('user-tab-bar').click();
-
-        // Click on Your Plan
-        cy.getBySel('profile-logged-your-plan').click();
 
     });
 });

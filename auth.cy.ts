@@ -8,63 +8,61 @@ describe('Authentication', () => {
 
     // Login
     it('simple login', () => {
-        // Click on user in the tab bar to login.
+        // Click on user in the tab bar to login
         cy.getBySel('login-tab-bar').click();
 
-        // Login the user.
+        // Login the user
         cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
 
-        // Subscription confirmation page not displayed.
+        // Subscription confirmation page not displayed
         cy.getBySel("subscription-confirmed").should("not.exist");
     });
 
     // Login with errors
     it('login with errors', () => {
-        // Click on user in the tab bar to login.
+        // Click on user in the tab bar to login
         cy.getBySel('login-tab-bar').click();
 
-        // Email form.
-
-        // Inputs short email.
+        // Email form
+        // Inputs short email
         cy.getBySel('auth-email-field').clear();
         cy.getBySel('auth-email-field').type('d@d.d');
 
-        // Submit short email.
+        // Submit short email
         cy.getBySel('auth-email-submit').click();
 
-        // Error check.
+        // Error check
         cy.getBySel('auth-email-error-short').should('exist');
 
-        // Inputs wrong email.
+        // Inputs wrong email
         cy.getBySel('auth-email-field').clear();
         cy.getBySel('auth-email-field').type('ddasdasd@ddasdasdasda');
 
-        // Submit wrong email.
+        // Submit wrong email
         cy.getBySel('auth-email-submit').click();
 
-        // Error check.
+        // Error check
         cy.getBySel('auth-email-error-not-valid').should('exist');
 
-        // Inputs email.
+        // Inputs email
         cy.getBySel('auth-email-field').clear();
         cy.getBySel('auth-email-field').type(freeEmail);
 
-        // Submit email.
+        // Submit email
         cy.getBySel('auth-email-submit').click();
 
-        // Email password form.
-
+        // Email password form
         // Waits after the "Email" field was focused
         cy.wait(1200);
 
-        // Inputs short email.
+        // Inputs short email
         cy.getBySel('auth-login-email-field').clear();
         cy.getBySel('auth-login-email-field').type('d@d.d');
 
-        // Submit short email.
+        // Submit short email
         cy.getBySel('auth-login-submit').click();
 
-        // Error check.
+        // Error check
         cy.getBySel('auth-login-error-short').should('exist');
         cy.getBySel('auth-login-error-password-missing').should('exist');
 
