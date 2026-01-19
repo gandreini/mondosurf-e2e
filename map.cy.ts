@@ -1,7 +1,7 @@
 describe('Map', () => {
     it('country map', () => {
         // Click on countries button.
-        cy.getBySel('countries-tab-bar').click();
+        cy.getBySel('spots-tab-bar').click();
 
         // Click on Italy.
         cy.getBySel('country-preview-title').contains('Italy').click();

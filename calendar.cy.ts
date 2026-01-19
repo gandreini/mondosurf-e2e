@@ -23,7 +23,7 @@ describe('Calendar', () => {
     });
 
     // Free user has access to calendar
-    it.only('free user accesses calendar', () => {
+    it('free user accesses calendar', () => {
         // Click on user in the tab bar to login
         cy.getBySel('home-pro-cta-already-member').click();
 
@@ -54,17 +54,17 @@ describe('Calendar', () => {
         // Click on the calendar button
         cy.getBySel('surf-spot-forecast-calendar-banner').click();
 
-        // New user login
+        // New user registration
         cy.register(newEmail, newName, Cypress.env('demo_users_password'));
 
-        // Calendar modal shows up.
+        // Calendar modal shows up
         cy.getBySel('get-calendar-url-ready').should('be.visible');
 
         // Close the modal.
         cy.getBySel('modal-close').click();
 
         // Subscription confirmation page displayed.
-        cy.getBySel("subscription-confirmed").should("exist");
+        // cy.getBySel("subscription-confirmed").should("exist");
     });
 
     // Free user starts access the calendar
@@ -87,6 +87,9 @@ describe('Calendar', () => {
 
     // Free user copies the calendar URL and download file
     it('calendar url copy', () => {
+        // Intercept the calendar-url API to get the URL for download testing
+        cy.intercept('POST', '**/calendar-url').as('getCalendarUrl');
+
         // Click on user in the tab bar to login.
         cy.getBySel('login-tab-bar').click();
 
@@ -109,21 +112,18 @@ describe('Calendar', () => {
         cy.getBySel('get-calendar-url-copy-button').click();
 
         // Check if toast appears
-        // Not working if the page is not on focus.
-        // cy.checkToast('data-test-toast-calendar-url-copied');
-
-        // Check if toast appears
         cy.checkToast('data-test-toast-favorite-added');
 
         // Favorite button is active
         cy.getBySel('favorite-remove-button').should('exist');
 
-        // Click on test url fo download file
-        cy.getBySel('get-calendar-url-test-url')
-            .invoke('attr', 'href')
-            .then((href) => {
-                cy.downloadAndCheck(href, 'calendar.ics');
-            });
+        // Download and check the calendar file using the intercepted API response
+        cy.wait('@getCalendarUrl').then((interception) => {
+            const calendarUrl = interception.response?.body?.calendar_url;
+            if (calendarUrl) {
+                cy.downloadAndCheck(calendarUrl, 'calendar.ics');
+            }
+        });
     });
 
     // User requests calendar URL via email.

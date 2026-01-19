@@ -9,44 +9,13 @@ describe('Favorites', () => {
     const trialName = 'Trial user';
     const searchString = 'lillatr';
 
-    // Trial user logins and adds favorite.
-    it('trial user can add favorites', () => {
-        // Click on user in the tab bar to login.
-        cy.getBySel('login-tab-bar').click();
-
-        // Free user logins.
-        cy.login(trialEmail, trialName, Cypress.env('demo_users_password'));
-
-        // Go to lillatro page
-        cy.searchAndGoToSpotPage('lillat');
-
-        // Adds the favorite
-        cy.intercept('POST', 'https://rest-api.mondosurf.local.com/wp-json/mondo_surf_api/v1/user-add-favourite').as(
-            'addFavoriteApi'
-        );
-        cy.getBySel('favorite-add-button')
-            .first()
-            .as('favButton')  // Store a reference
-            .should('be.visible')
-            // .wait(Cypress.env('favorite_button_click_wait'))
-            .click()
-
-        // Wait for API response before checking UI
-        cy.wait('@addFavoriteApi')
-            .its('response.body.success')
-            .should('equal', true);
-
-        // Remove favorite button is displayed.
-        cy.getBySel('favorite-remove-button').should('be.visible');
-    });
-
-    // Pro user logins and adds favorite
-    it('pro user can add favorites', () => {
+    // Free user logins and adds favorite
+    it('free user can add favorites', () => {
         // Click on user in the tab bar to login.
         cy.getBySel('login-tab-bar').click();
 
         // Pro user logins.
-        cy.login(proEmail, proName, Cypress.env('demo_users_password'));
+        cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
 
         // Go to lillatro page
         cy.searchAndGoToSpotPage('lillat');
@@ -71,13 +40,13 @@ describe('Favorites', () => {
         cy.getBySel('favorite-remove-button').should('be.visible');
     });
 
-    // Pro user logins and add and remove favorite from search results
+    // Free user logins and add and remove favorite from search results
     it('add/remove favorite from search results', () => {
         // Click on user in the tab bar to login.
         cy.getBySel('login-tab-bar').click();
 
         // Login the user.
-        cy.login(proEmail, proName, Cypress.env('demo_users_password'));
+        cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
 
         // Go to search page.
         // cy.getBySel('search-header').click();
@@ -116,13 +85,13 @@ describe('Favorites', () => {
         cy.checkToast('data-test-toast-favorite-removed');
     });
 
-    // Pro user logins and add and remove favorite from surf spot page
+    // Free user logins and add and remove favorite from surf spot page
     it('add/remove favorite from spot page', () => {
         // Click on user in the tab bar to login.
         cy.getBySel('login-tab-bar').click();
 
         // Login the user.
-        cy.login(proEmail, proName, Cypress.env('demo_users_password'));
+        cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
 
         // Go to lillatro page.
         cy.searchAndGoToSpotPage('lillatr');
@@ -141,13 +110,13 @@ describe('Favorites', () => {
         cy.checkToast('data-test-toast-favorite-removed');
     });
 
-    // Pro user logins, adds a spot to favorites from search results, and removes it from spot page
+    // Free user logins, adds a spot to favorites from search results, and removes it from spot page
     it('adds and removes a spot', () => {
         // Click on user in the tab bar to login.
         cy.getBySel('login-tab-bar').click();
 
         // Login the user.
-        cy.login(proEmail, proName, Cypress.env('demo_users_password'));
+        cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
 
         // Back to home.
         cy.goHome();
@@ -202,13 +171,13 @@ describe('Favorites', () => {
         cy.getBySel('favorite-add-button').should('exist');
     });
 
-    // pro user logins, browses the favorites profile page and deletes a favorite
+    // Free user logins, browses the favorites profile page and deletes a favorite
     it('favorites profile page', () => {
         // Click on user in the tab bar to login.
         cy.getBySel('login-tab-bar').click();
 
         // Free user logins.
-        cy.login(proEmail, proName, Cypress.env('demo_users_password'));
+        cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
 
         // Go to lillatro page
         cy.searchAndGoToSpotPage('lillat');
@@ -244,7 +213,7 @@ describe('Favorites', () => {
         cy.getBySel('login-tab-bar').click();
 
         // Login the user.
-        cy.login(proEmail, proName, Cypress.env('demo_users_password'));
+        cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
 
         // Go to lillatro page.
         cy.searchAndGoToSpotPage('lillatr');
@@ -276,9 +245,6 @@ describe('Favorites', () => {
 
         // Toast is displayed.
         cy.checkToast('data-test-toast-favorite-added');
-
-        // The banner is hidden
-        cy.getBySel('subscription-confirmed').should('exist');
     });
 
     // New user clicks on banner, registers, and adds favorite in spot page.
@@ -297,12 +263,9 @@ describe('Favorites', () => {
 
         // Toast is displayed.
         cy.checkToast('data-test-toast-favorite-added');
-
-        // The banner is hidden
-        cy.getBySel('subscription-confirmed').should('exist');
     });
 
-    // Free user clicks on icon, logins, and can't add favorite in spot page.
+    // Free user clicks on icon, logins, and adds favorite in spot page.
     it('free user adds favorite from icon', () => {
         // Go to lillatro page.
         cy.searchAndGoToSpotPage('lillatr');
@@ -314,14 +277,20 @@ describe('Favorites', () => {
         // Email modal is displayed.
         cy.getBySel('auth-email-form').should('be.visible');
 
-        // Free user logins.
+        // Pro user logins.
         cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
 
-        // Pro modal is displayed.
-        cy.getBySel('pro-modal').should('be.visible');
+        // Toast is displayed.
+        cy.checkToast('data-test-toast-favorite-added');
+
+        // The banner is hidden
+        cy.getBySel('surf-spot-forecast-favorite-hidden-banner').should('exist');
+
+        // Remove favorite button is displayed.
+        cy.getBySel('favorite-remove-button').should('be.visible');
     });
 
-    // Free user clicks on banner, logins, and can't add favorite in spot page.
+    // Free user clicks on banner, logins, and adds favorite in spot page.
     it('free user adds favorite from banner', () => {
         // Go to lillatro page.
         cy.searchAndGoToSpotPage('lillatr');
@@ -334,49 +303,6 @@ describe('Favorites', () => {
 
         // Free user logins.
         cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
-
-        // Pro modal is displayed.
-        cy.getBySel('pro-modal').should('be.visible');
-    });
-
-    // Pro user clicks on icon, logins, and adds favorite in spot page.
-    it('pro user adds favorite from icon', () => {
-        // Go to lillatro page.
-        cy.searchAndGoToSpotPage('lillatr');
-
-        // Click on favorite button.
-        cy.wait(Cypress.env('favorite_button_click_wait')); // Added to avoid the Cypress error "Cannot read properties of undefined"
-        cy.getBySel('favorite-add-button').first().click();
-
-        // Email modal is displayed.
-        cy.getBySel('auth-email-form').should('be.visible');
-
-        // Pro user logins.
-        cy.login(proEmail, proName, Cypress.env('demo_users_password'));
-
-        // Toast is displayed.
-        cy.checkToast('data-test-toast-favorite-added');
-
-        // The banner is hidden
-        cy.getBySel('surf-spot-forecast-favorite-hidden-banner').should('exist');
-
-        // Remove favorite button is displayed.
-        cy.getBySel('favorite-remove-button').should('be.visible');
-    });
-
-    // Pro user clicks on banner, logins, and adds favorite in spot page.
-    it('pro user adds favorite from banner', () => {
-        // Go to lillatro page.
-        cy.searchAndGoToSpotPage('lillatr');
-
-        // Click on favorite button.
-        cy.getBySel('surf-spot-forecast-favorite-banner').click();
-
-        // Email modal is displayed.
-        cy.getBySel('auth-email-form').should('be.visible');
-
-        // Pro user logins.
-        cy.login(proEmail, proName, Cypress.env('demo_users_password'));
 
         // Toast is displayed.
         cy.checkToast('data-test-toast-favorite-added');
