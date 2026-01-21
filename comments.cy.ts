@@ -20,7 +20,8 @@ describe('Comments', () => {
         const randomComment = `Test comment ${Math.random().toString(36).substring(2, 8)}`;
 
         // Inputs the comment
-        cy.getBySel('comment-field').clear();
+        cy.getBySel('comment-field').should("exist");
+        cy.wait(500);
         cy.getBySel('comment-field').type(randomComment);
         cy.getBySel('comment-submit').click();
 
@@ -57,7 +58,8 @@ describe('Comments', () => {
         const randomComment = `Test comment ${Math.random().toString(36).substring(2, 8)}`;
 
         // Inputs the comment
-        cy.getBySel('comment-field').clear();
+        cy.getBySel('comment-field').should("exist");
+        cy.wait(500);
         cy.getBySel('comment-field').type(randomComment);
         cy.getBySel('comment-submit').click();
 
