@@ -51,7 +51,7 @@ describe('Home', () => {
 
     // Free user logged
     it('free user logged', () => {
-        cy.viewport(1000, 1200);
+        cy.viewport('iphone-xr');
 
         // Click on user in the tab bar to login.
         cy.getBySel('login-tab-bar').click();
@@ -87,7 +87,7 @@ describe('Home', () => {
 
     // Free user logged, adds a favorite, no good times
     it('free user add favorite but no good times', () => {
-        cy.viewport(1000, 800);
+        cy.viewport('iphone-xr');
 
         // Click on user in the tab bar to login.
         cy.getBySel('login-tab-bar').click();
@@ -153,7 +153,7 @@ describe('Home', () => {
         const fakeStartTimeIso = fakeStartTime.toISOString();
         const fakeEndTimeIso = fakeEndTime.toISOString();
 
-        cy.viewport(1000, 1300);
+        cy.viewport('iphone-xr');
 
         // Click on user in the tab bar to login.
         cy.getBySel('login-tab-bar').click();
