@@ -24,8 +24,11 @@ describe('Calendar', () => {
 
     // Free user has access to calendar
     it('free user accesses calendar', () => {
-        // Click on user in the tab bar to login
-        cy.getBySel('home-pro-cta-already-member').click();
+        if (Cypress.env('app') === "app") {
+            cy.getBySel('home-pro-cta-already-member').click();
+        } else {
+            cy.getBySel('login-tab-bar').click();
+        }
 
         // Free user login
         cy.login(freeEmail, freeName, Cypress.env('demo_users_password'));
