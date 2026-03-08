@@ -392,4 +392,37 @@ describe('Authentication', () => {
         // Check
         cy.getBySel('auth-email-form').should('exist');
     });
+
+    // Register and delete account
+    it.only('register and delete account', () => {
+        // Click on user in the tab bar to login.
+        cy.getBySel('login-tab-bar').click();
+
+        // Register a new user.
+        cy.register(newEmail, newName, Cypress.env('demo_users_password'));
+
+        // Navigate to the profile page.
+        cy.getBySel('user-tab-bar').click();
+
+        // Wait for profile details to load.
+        cy.getBySel('profile-details-list').should('exist');
+
+        // Click the delete account button.
+        cy.getBySel('delete-account-button').click();
+
+        // Intercept the deletion API call.
+        cy.intercept('POST', 'https://rest-api.mondosurf.local.com/wp-json/mondo_surf_api/v1/request-account-cancellation').as('deleteAccountApi');
+
+        // Type DELETE in the confirmation input.
+        cy.getBySel('delete-account-input').type('DELETE');
+
+        // Confirm deletion.
+        cy.getBySel('delete-account-confirm-button').click();
+
+        // Wait for the API call to complete.
+        cy.wait('@deleteAccountApi').its('response.body.success').should('equal', true);
+
+        // User should be redirected to home and logged out.
+        cy.getBySel('login-tab-bar').should('exist');
+    });
 });
