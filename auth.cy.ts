@@ -401,17 +401,20 @@ describe('Authentication', () => {
         // Register a new user.
         cy.register(newEmail, newName, Cypress.env('demo_users_password'));
 
-        // Navigate to the profile page.
+        // Navigate to the profile menu.
         cy.getBySel('user-tab-bar').click();
+
+        // Click "Your Profile" to go to profile details.
+        cy.getBySel('profile-logged-your-profile').click();
 
         // Wait for profile details to load.
         cy.getBySel('profile-details-list').should('exist');
 
+        // Intercept the deletion API call (must be set up before triggering it).
+        cy.intercept('POST', '**/request-account-cancellation').as('deleteAccountApi');
+
         // Click the delete account button.
         cy.getBySel('delete-account-button').click();
-
-        // Intercept the deletion API call.
-        cy.intercept('POST', 'https://rest-api.mondosurf.local.com/wp-json/mondo_surf_api/v1/request-account-cancellation').as('deleteAccountApi');
 
         // Type DELETE in the confirmation input.
         cy.getBySel('delete-account-input').type('DELETE');
